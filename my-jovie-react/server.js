@@ -24,7 +24,6 @@ app.use(
   }),
 );
 
-app.options('/*', cors());
 
 const upload = multer({
   storage: multer.memoryStorage(),
