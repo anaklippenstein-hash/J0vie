@@ -15,7 +15,7 @@ const Form = () => {
 
         try {
             const formData = new FormData(formElement);
-            const response = await fetch('http://localhost:5001/api/form-submit', {
+            const response = await fetch('/api/form-submit', {
                 method: 'POST',
                 body: formData,
             });
