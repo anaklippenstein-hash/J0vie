@@ -1,45 +1,84 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 const Form = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formElement = e.currentTarget;
-        setIsSubmitting(true);
-        setSubmitError('');
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError("");
 
-        try {
-            const formData = new FormData(formElement);
-            const response = await fetch(`${API_BASE}/api/form-submit`, {
-                method: 'POST',
-                body: formData,
-            });
+  try {
+    const formData = new FormData(e.target);
 
-            const data = await response.json();
+    // 🔥 This now sends to your Vercel backend
+    const response = await fetch("/api/telegram", {
+      method: "POST",
+      body: formData,
+    });
 
-            if (!response.ok) {
-                throw new Error(data?.message || 'Failed to submit application.');
-            }
+    if (!response.ok) {
+      throw new Error("Failed to send");
+    }
 
-            formElement.reset();
-            navigate('/apply/success', {
-                state: {
-                    message: 'Application submitted successfully. Check your email inbox for additional information.',
-                },
-            });
-        } catch (error) {
-            setSubmitError(error.message || 'Something went wrong while submitting.');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+    alert("Application submitted successfully!");
+    e.target.reset();
+  } catch (error) {
+    console.error(error);
+    setSubmitError("Failed to send.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const formElement = e.currentTarget;
+    //     const formData = new FormData(formElement);
+    //     await fetch("/api/telegram", {
+    //     method: "POST",
+    //     body: formData,
+    //     });
+
+
+
+    //     e.preventDefault();
+    //     const formElement = e.currentTarget;
+    //     setIsSubmitting(true);
+    //     setSubmitError('');
+
+    //     try {
+    //         const formData = new FormData(formElement);
+    //         const response = await fetch(`${API_BASE}/api/form-submit`, {
+    //             method: 'POST',
+    //             body: formData,
+    //         });
+
+    //         const data = await response.json();
+
+    //         if (!response.ok) {
+    //             throw new Error(data?.message || 'Failed to submit application.');
+    //         }
+
+    //         formElement.reset();
+    //         navigate('/apply/success', {
+    //             state: {
+    //                 message: 'Application submitted successfully. Check your email inbox for additional information.',
+    //             },
+    //         });
+    //     } catch (error) {
+    //         setSubmitError(error.message || 'Something went wrong while submitting.');
+    //     } finally {
+    //         setIsSubmitting(false);
+    //     }
+    // };
 
     return (
         <main className="apply-page">
